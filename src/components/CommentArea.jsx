@@ -11,8 +11,13 @@ const CommentArea = (props) => {
   //   comments: [],
   // };
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState({
+    isLoading: true,
+    comments: [],
+  });
+
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [comments, setComments] = useState([]);
 
   const fetchComments = async () => {
     const URL = "https://striveschool-api.herokuapp.com/api/comments/";
@@ -33,8 +38,10 @@ const CommentArea = (props) => {
           (comment) => comment.elementId === props.asin
         );
         // console.log("filtercomm", filterComments);
-        setIsLoading(false);
-        setComments(filterComments);
+
+        setShowComments({ isLoading: false, comments: filterComments });
+        // setIsLoading(false);
+        // setComments(filterComments);
         // console.log(parseComments);
         // console.log(this.state.comments);
       }
@@ -68,22 +75,25 @@ const CommentArea = (props) => {
       style={{ margin: "0 40px 0 20px", width: "400px" }}
     >
       {/* {console.log(this.state.comments)} */}
-      {(comments === null || comments.length === 0) && !isLoading && (
-        // <div style={{ marginTop: "20px" }}>
-        //   Non ci sono ancora commenti su questo libro
-        // </div>
+      {(showComments.comments === null || showComments.comments.length === 0) &&
+        !showComments.isLoading && (
+          // <div style={{ marginTop: "20px" }}>
+          //   Non ci sono ancora commenti su questo libro
+          // </div>
 
-        <ListGroup>
-          <ListGroup.Item as="li">
-            Non ci sono ancora commenti su questo libro
-          </ListGroup.Item>
-        </ListGroup>
-      )}
-      {comments !== null && comments.length !== 0 && !isLoading && (
-        <>
-          <CommentsList commentList={comments} />
-        </>
-      )}
+          <ListGroup>
+            <ListGroup.Item as="li">
+              Non ci sono ancora commenti su questo libro
+            </ListGroup.Item>
+          </ListGroup>
+        )}
+      {showComments.comments !== null &&
+        showComments.comments.length !== 0 &&
+        !showComments.isLoading && (
+          <>
+            <CommentsList commentList={showComments.comments} />
+          </>
+        )}
       <AddComment asin={props.asin} />
       {/* <div style={{ margin: "20px 40px 0 20px", minWidth: "200px" }}>
           Al momento non c'è nulla e manca la funzione

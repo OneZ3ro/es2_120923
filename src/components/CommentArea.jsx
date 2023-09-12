@@ -14,6 +14,7 @@ const CommentArea = (props) => {
   const [showComments, setShowComments] = useState({
     isLoading: true,
     comments: [],
+    reLoading: false,
   });
 
   // const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +40,11 @@ const CommentArea = (props) => {
         );
         console.log("filtercomm", filterComments);
 
-        setShowComments({ isLoading: false, comments: filterComments });
+        setShowComments({
+          isLoading: false,
+          comments: filterComments,
+          reLoading: false,
+        });
         // setIsLoading(false);
         // setComments(filterComments);
         // console.log(parseComments);
@@ -63,10 +68,19 @@ const CommentArea = (props) => {
   //   }
   // };
 
+  const forReLoad = () => {
+    setShowComments({ ...showComments, reLoading: true });
+  };
+
   useEffect(() => {
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.asin]);
+
+  useEffect(() => {
+    fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showComments.reLoading]);
 
   // console.log(this.state.comments);
   return (
@@ -94,7 +108,7 @@ const CommentArea = (props) => {
             <CommentsList commentList={showComments.comments} />
           </>
         )}
-      <AddComment asin={props.asin} />
+      <AddComment asin={props.asin} forReLoad={forReLoad} />
       {/* <div style={{ margin: "20px 40px 0 20px", minWidth: "200px" }}>
           Al momento non c'è nulla e manca la funzione
         </div> */}

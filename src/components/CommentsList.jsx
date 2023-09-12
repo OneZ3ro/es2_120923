@@ -13,10 +13,18 @@ const CommentsList = (props) => {
       }}
     >
       {props.commentList.map((elem) => (
-        <ListGroup.Item as="li" key={`commID-${elem._id}`}>
+        <ListGroup.Item
+          as="li"
+          key={`commID-${elem._id}`}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {elem.comment}
           <Button variant="danger" style={{ marginLeft: "15px" }}>
-            Danger
+            Rimuovi
           </Button>
         </ListGroup.Item>
       ))}

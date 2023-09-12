@@ -11,24 +11,28 @@ const AddComment = (props) => {
   //   },
   // };
 
-  const [userComment, setUserComment] = useState({
+  const [comment, setComment] = useState({
     comment: "",
     rate: "",
-    elementId: props.asin,
+    elementId: "",
   });
 
   const handleChange = (propertyName, propertyValue) => {
-    setUserComment({ ...userComment, [propertyName]: propertyValue });
+    setComment({
+      ...comment,
+      [propertyName]: propertyValue,
+      elementId: props.asin,
+    });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // setUserComment({ ...userComment, elementId: props.asin });
-    console.log(userComment);
+    // setComment({ ...comment, elementId: props.asin });
+    console.log(comment);
     const URL = "https://striveschool-api.herokuapp.com/api/comments/";
     const method = {
       method: "POST",
-      body: JSON.stringify(userComment),
+      body: JSON.stringify(comment),
       headers: {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NjY1MjEwYmNhMDAwMTQ1ODNmZDIiLCJpYXQiOjE2OTQwOTA1NzMsImV4cCI6MTY5NTMwMDE3M30.NaaaXaNcsPbSiqzTPJ0r85gA640OlnKF8HjoHiwRbTc",
@@ -40,11 +44,12 @@ const AddComment = (props) => {
       console.log(response);
       if (response.ok) {
         alert("Commento inviato!");
-        setUserComment({
+        setComment({
           comment: "",
-          rate: 1,
+          rate: "",
           elementId: props.asin,
         });
+        props.forReLoad();
       } else {
         console.log("error");
         alert("something went wrong");
@@ -71,7 +76,7 @@ const AddComment = (props) => {
           type="text"
           placeholder="Scrivi il tuo commento"
           required
-          // value={this.state.userComment.comment}
+          value={comment.comment}
           onChange={(event) => handleChange("comment", event.target.value)}
         />
       </Form.Group>
@@ -83,7 +88,7 @@ const AddComment = (props) => {
           min={1}
           max={5}
           required
-          // value={this.state.userComment.rate}
+          value={comment.rate}
           onChange={(event) => handleChange("rate", event.target.value)}
         />
       </Form.Group>

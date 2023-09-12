@@ -18,12 +18,13 @@ const App = () => {
   //   selectedCard: false,
   // };
 
-  const [idBookClicked, setIdBookClicked] = useState("");
-  const [selectedCard, setSelectedCard] = useState(false);
+  // const [selectedCard, setSelectedCard] = useState(false);
 
-  const handleSelectedCard = () => {
-    setSelectedCard(!selectedCard);
-  };
+  // const handleSelectedCard = () => {
+  //   setSelectedCard(!selectedCard);
+  // };
+
+  const [idBookClicked, setIdBookClicked] = useState("");
 
   const setIdBook = (value) => {
     setIdBookClicked(value);
@@ -48,7 +49,7 @@ const App = () => {
           <BookList
             myArr={fantasy}
             setIdBook={setIdBook}
-            handleSelectedCard={handleSelectedCard}
+            // handleSelectedCard={handleSelectedCard}
             asin={idBookClicked}
           />
           <CommentArea asin={idBookClicked} />

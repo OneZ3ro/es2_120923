@@ -23,6 +23,7 @@ const AddComment = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // setUserComment({ ...userComment, elementId: props.asin });
     console.log(userComment);
     const URL = "https://striveschool-api.herokuapp.com/api/comments/";
     const method = {
@@ -37,6 +38,17 @@ const AddComment = (props) => {
     try {
       const response = await fetch(URL, method);
       console.log(response);
+      if (response.ok) {
+        alert("Commento inviato!");
+        setUserComment({
+          comment: "",
+          rate: 1,
+          elementId: props.asin,
+        });
+      } else {
+        console.log("error");
+        alert("something went wrong");
+      }
     } catch (error) {
       console.log(error);
     }

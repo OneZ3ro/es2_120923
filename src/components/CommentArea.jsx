@@ -37,7 +37,7 @@ const CommentArea = (props) => {
         const filterComments = parseComments.filter(
           (comment) => comment.elementId === props.asin
         );
-        // console.log("filtercomm", filterComments);
+        console.log("filtercomm", filterComments);
 
         setShowComments({ isLoading: false, comments: filterComments });
         // setIsLoading(false);
